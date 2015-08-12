@@ -10,6 +10,12 @@
 (defonce Size (.. famous -components -Size))
 (defonce ABSOLUTE (.. Size -ABSOLUTE))
 
+(defn find-animation-component []
+  "the scene-graph is stored in data-script. query for :node/components and take the second one"
+  (let [component (-> (d/q '[:find (pull ?c [*]) :where [?node :node/components ?c]] @infamous/conn) second first)]
+    (clj->js component) ;convert a component (plain old clojure map) into a javascript map (ie javascript object)
+    ))
+
 (def scene-graph {:node/id         "root"
                   :node/children [{:node/id "logo"
                                    :node/size-mode [ABSOLUTE ABSOLUTE ABSOLUTE]
@@ -22,7 +28,7 @@
                                                       :src "http://verse.aasemoon.com/images/5/51/Clojure-Logo.png"}
                                                      {:onUpdate (fn [time]
                                                                   (let [logo (:node/famous-node (infamous/get-node-by-id "logo"))
-                                                                        c (-> (d/q '[:find (pull ?c [*]) :where [?node :node/components ?c]] @infamous/conn ) second first)]
+                                                                        animate (find-animation-component)]
                                                                     (.. logo (setRotation  0 0 (/ time 1000)))
                                                                     (.. logo (setPosition (+ 50 (* 500 (.sin js/Math (/ time 1000))))
                                                                                           50
@@ -33,7 +39,7 @@
                                                                                               (* 250
                                                                                                  (+ (.cos js/Math
                                                                                                           (/ time 1000)) 1.5 ))))
-                                                                    (.. FamousEngine (requestUpdate (clj->js c) ))))}]}
+                                                                    (.. FamousEngine (requestUpdate animate))))}]}
                                   {:node/id "bigben"
                                    :node/size-mode [ABSOLUTE ABSOLUTE ABSOLUTE]
                                    :node/absolute-size [(/ 1728 3) (/ 2304 3)]
@@ -46,9 +52,10 @@
 
 (infamous/render-scene-graph scene-graph "body")
 
+;;code below will be encapsulated somehow in future releases
 (let [logo (:node/famous-node (infamous/get-node-by-id "logo"))
-      c (-> (d/q '[:find (pull ?c [*]) :where [?node :node/components ?c]] @infamous/conn) second first)]
-  (.. FamousEngine (requestUpdate (clj->js c) )))
+      animate (find-animation-component)]
+  (.. FamousEngine (requestUpdate animate)))
 
 
 
