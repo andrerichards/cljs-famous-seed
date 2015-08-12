@@ -1,5 +1,5 @@
 # Description
-This is an Infamous ClojureScript (https://github.com/sonwh98/infamous) example base the famous seed project
+This is an Infamous ClojureScript (https://github.com/sonwh98/infamous) example base the on famous seed project
 It was built during London Clojurian dojo hack night.
 
 # Run

@@ -11,8 +11,7 @@
 (defonce ABSOLUTE (.. Size -ABSOLUTE))
 
 (def scene-graph {:node/id         "root"
-                  :node/children [
-                                  {:node/id "logo"
+                  :node/children [{:node/id "logo"
                                    :node/size-mode [ABSOLUTE ABSOLUTE ABSOLUTE]
                                    :node/absolute-size [250 250]
                                    :node/align [0.5 0.5]
@@ -35,7 +34,6 @@
                                                                                                  (+ (.cos js/Math
                                                                                                           (/ time 1000)) 1.5 ))))
                                                                     (.. FamousEngine (requestUpdate (clj->js c) ))))}]}
-
                                   {:node/id "bigben"
                                    :node/size-mode [ABSOLUTE ABSOLUTE ABSOLUTE]
                                    :node/absolute-size [(/ 1728 3) (/ 2304 3)]
@@ -44,18 +42,13 @@
                                    :node/origin [0.5 0.5]
                                    :node/components [{:component/type :DOMElement
                                                      :tag-name "img"
-                                                     :src "https://upload.wikimedia.org/wikipedia/commons/e/eb/Big_ben_closeup.jpg"
-                                                     }]}
-                                  ]
-
-                  })
+                                                     :src "https://upload.wikimedia.org/wikipedia/commons/e/eb/Big_ben_closeup.jpg"}]}]})
 
 (infamous/render-scene-graph scene-graph "body")
 
 (let [logo (:node/famous-node (infamous/get-node-by-id "logo"))
       c (-> (d/q '[:find (pull ?c [*]) :where [?node :node/components ?c]] @infamous/conn) second first)]
-  (.. FamousEngine (requestUpdate (clj->js c) ))
-  )
+  (.. FamousEngine (requestUpdate (clj->js c) )))
 
 
 
