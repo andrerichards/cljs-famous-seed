@@ -1,8 +1,6 @@
 (ns ^:figwheel-always seed.core
-    (:require-macros [cljs.core.async.macros :refer [go]])
     (:require [com.kaicode.infamous :as infamous :refer [famous]]
-              [datascript :as d]
-              [cljs.core.async :refer [alts!]]))
+              [datascript :as d]))
 
 (enable-console-print!)
 
