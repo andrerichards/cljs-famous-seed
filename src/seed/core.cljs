@@ -11,8 +11,8 @@
 (defonce ABSOLUTE (.. Size -ABSOLUTE))
 
 (defn find-animation-component []
-  "the scene-graph is stored in data-script. query for :node/components and take the second one"
-  (let [component (-> (d/q '[:find (pull ?c [*]) :where [?node :node/components ?c]] @infamous/conn) second first)]
+  "the scene-graph is stored in data-script. query for component with :component/id equal to animation"
+  (let [component (-> (d/q '[:find (pull ?c [*]) :where [?c :component/id "animation"]] @infamous/conn) ffirst)]
     (clj->js component) ;convert a component (plain old clojure map) into a javascript map (ie javascript object)
     ))
 
@@ -26,9 +26,10 @@
                                    :node/components [{:component/type :DOMElement
                                                       :tag-name "img"
                                                       :src "http://verse.aasemoon.com/images/5/51/Clojure-Logo.png"}
-                                                     {:onUpdate (fn [time]
+                                                     {:component/id "animation"
+                                                      :onUpdate (fn [time]
                                                                   (let [logo (:node/famous-node (infamous/get-node-by-id "logo"))
-                                                                        animate (find-animation-component)]
+                                                                        animation (find-animation-component)]
                                                                     (.. logo (setRotation  0 0 (/ time 1000)))
                                                                     (.. logo (setPosition (+ 50 (* 500 (.sin js/Math (/ time 1000))))
                                                                                           50
@@ -39,7 +40,7 @@
                                                                                               (* 250
                                                                                                  (+ (.cos js/Math
                                                                                                           (/ time 1000)) 1.5 ))))
-                                                                    (.. FamousEngine (requestUpdate animate))))}]}
+                                                                    (.. FamousEngine (requestUpdate animation))))}]}
                                   {:node/id "bigben"
                                    :node/size-mode [ABSOLUTE ABSOLUTE ABSOLUTE]
                                    :node/absolute-size [(/ 1728 3) (/ 2304 3)]
@@ -54,9 +55,5 @@
 
 ;;code below will be encapsulated somehow in future releases
 (let [logo (:node/famous-node (infamous/get-node-by-id "logo"))
-      animate (find-animation-component)]
-  (.. FamousEngine (requestUpdate animate)))
-
-
-
-
+      animation (find-animation-component)]
+  (.. FamousEngine (requestUpdate animation)))
