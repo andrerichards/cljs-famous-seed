@@ -7,10 +7,7 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.28"]
                  [figwheel "0.3.3"]
-                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
-                 [datascript "0.11.6"]
-                 [com.kaicode/infamous "0.7.4-SNAPSHOT"]
-                 [reagent "0.5.0"]]
+                 [com.kaicode/infamous "0.7.9-SNAPSHOT"]]
 
   :plugins [[lein-cljsbuild "1.0.6"]
             [lein-figwheel "0.3.7"]]
@@ -22,18 +19,18 @@
   :cljsbuild {
               :builds [{:id           "dev"
                         :source-paths ["src" "dev_src"]
-                        :compiler     {:output-to            "resources/public/js/compiled/carousel.js"
+                        :compiler     {:output-to            "resources/public/js/compiled/seed.js"
                                        :output-dir           "resources/public/js/compiled/out"
                                        :optimizations        :none
-                                       :main                 carousel.dev
+                                       :main                 seed.dev
                                        :asset-path           "js/compiled/out"
                                        :source-map           true
                                        :source-map-timestamp true
                                        :cache-analysis       true}}
                        {:id           "min"
                         :source-paths ["src"]
-                        :compiler     {:output-to     "resources/public/js/compiled/carousel.js"
-                                       :main          carousel.core
+                        :compiler     {:output-to     "resources/public/js/compiled/seed.js"
+                                       :main          seed.core
                                        :optimizations :advanced
                                        :pretty-print  false}}]}
 

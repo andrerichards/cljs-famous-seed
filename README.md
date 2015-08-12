@@ -1,5 +1,6 @@
 # Description
-This is an Infamous ClojureScript (https://github.com/sonwh98/infamous) example base on the Famous Carousel example http://famous.org/learn/Carousel/index.html
+This is an Infamous ClojureScript (https://github.com/sonwh98/infamous) example base the famous seed project
+It was built during London Clojurian dojo hack night.
 
 # Run
 This is a ClojureScript project so make sure you have Leiningen installed http://leiningen.org/
